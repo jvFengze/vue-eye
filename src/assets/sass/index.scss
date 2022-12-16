@@ -1,0 +1,33 @@
+.top-title {
+    height: 60px;
+    width: 100%;
+    padding-left: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .text {
+        font-size: 14px;
+        padding-left: 8px;
+        padding-bottom: 1px;
+        color: white;
+    }
+
+    .box {
+        display: flex;
+        align-items: center;
+
+        .line {
+            height: 1px;
+            width: 85px;
+            background-color: #1B9CFC;
+        }
+
+        .circle {
+            height: 5px;
+            width: 5px;
+            border-radius: 50%;
+            background-color: #1B9CFC;
+        }
+    }
+}
