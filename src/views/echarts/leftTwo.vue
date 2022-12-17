@@ -2,7 +2,7 @@
   <div class="leftTwo">
     <div class="top-title">
         <div class="text">
-            折线图模板
+            饼图模板
         </div>
         <div class="box">
             <div class="line"></div>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { leftTwo } from '../../api/data'
 export default {
  components: {},
  data() {
@@ -26,7 +27,9 @@ export default {
      this.initCharts();
  },
  methods: {
-     initCharts() {
+     async initCharts() {
+         const {data} = await leftTwo();
+         let list = data.list;
          let myCharts = this.$echarts.init(document.getElementById('leftTwo'));
          let option = {
              tooltip: {
@@ -41,13 +44,7 @@ export default {
                      name: 'Access From',
                      type: 'pie',
                      radius: '80%',
-                     data: [
-                         { value: 1048, name: 'Search Engine'},
-                         { value: 735, name: 'Direct' },
-                         { value: 580, name: 'Email' },
-                         { value: 484, name: 'Union Ads' },
-                         { value: 300, name: 'Video Ads' }
-                     ],
+                     data: list,
                      emphasis: {
                          itemStyle: {
                              shadowBlur: 10,

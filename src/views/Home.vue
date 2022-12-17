@@ -20,16 +20,16 @@
       <div class="middle">
         <div class="middle-one">
           <dv-border-box-12>
-            
+            <middleOneVue></middleOneVue>
           </dv-border-box-12>
         </div>
         <div class="middle-two">
           <dv-border-box-12>
-          
+            <middleTwoVue></middleTwoVue>
           </dv-border-box-12>
         </div>
       </div>
-      <div class="right">
+      <!-- <div class="right">
         <div class="right-one">
           <dv-border-box-12><rightOneVue></rightOneVue></dv-border-box-12>
         </div>
@@ -39,7 +39,7 @@
         <div class="right-three">
           <dv-border-box-12><rightThreeVue></rightThreeVue></dv-border-box-12>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -51,6 +51,8 @@ import leftThreeVue from './echarts/leftThree.vue';
 import rightOneVue from './echarts/rightOne.vue';
 import rightTwoVue from './echarts/rightTwo.vue';
 import rightThreeVue from './echarts/rightThree.vue';
+import middleOneVue from './echarts/middleOne.vue';
+import middleTwoVue from './echarts/middleTwo.vue';
 export default {
  components: {
     leftOneVue,
@@ -58,7 +60,9 @@ export default {
     leftThreeVue,
     rightOneVue,
     rightTwoVue,
-    rightThreeVue
+    rightThreeVue,
+    middleOneVue,
+    middleTwoVue
  },
  data() {
  return {
