@@ -50,9 +50,9 @@ export default {
             }
         }
          let option = {
-             tooltip: {
-                 position: "top",
-             },
+            //  tooltip: {
+            //      position: "top",
+            //  },
              animation: false,
              grid: {
                  height: "70%",
@@ -100,6 +100,9 @@ export default {
                  left: "center",
                  bottom: "10%",
                  color: ["#0d59b7", "#18dcff"],
+                 textStyle:{
+                     color: '#d1d8e0'
+                 }
              },
              series: [
                  {

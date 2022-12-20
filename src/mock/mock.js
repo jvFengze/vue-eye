@@ -55,3 +55,16 @@ Mock.mock('/api/middleTwo', 'get', {
     //     '@hex'
     // ]
 })
+
+Mock.mock('/api/rightOne', 'get', {
+    'list|7':[
+        '@natural(30,180)'
+    ]
+})
+
+Mock.mock('/api/rightTwo', 'get', {
+    'list|5':[{
+        name:'@cword(2)',
+        value: '@natural(30,150)'
+    }]
+})

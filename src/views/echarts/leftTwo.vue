@@ -35,6 +35,10 @@ export default {
              tooltip: {
                  trigger: 'item'
              },
+            //  grid: {
+            //      top: '50%',
+            //      bottom: '30%',
+            //  },
              label: {
                  color: 'auto'
              },
@@ -43,7 +47,7 @@ export default {
                  {
                      name: 'Access From',
                      type: 'pie',
-                     radius: '80%',
+                     radius: '65%',
                      data: list,
                      emphasis: {
                          itemStyle: {
@@ -72,7 +76,7 @@ export default {
         height: 100%;
         width: 100%;
         #leftTwo{
-            height: 60%;
+            height: 70%;
             width: 100%;
         }
     }
