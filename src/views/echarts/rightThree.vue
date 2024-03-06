@@ -1,18 +1,18 @@
 <template>
-    <div class="rightThree">
-        <div class="top-title">
-            <div class="text">
-                雷达图模板
-            </div>
-            <div class="box">
-                <div class="line"></div>
-                <div class="circle"></div>
-            </div>
-        </div>
-        <div id="rightThree">
-
-        </div>
+  <div class="rightThree">
+    <div class="top-title">
+      <div class="text">
+        紫外线指数
+      </div>
+      <div class="box">
+        <div class="line"></div>
+        <div class="circle"></div>
+      </div>
     </div>
+    <div id="rightThree">
+
+    </div>
+  </div>
 </template>
 
 <script>
@@ -20,7 +20,19 @@ export default {
   components: {},
   data() {
     return {
-     
+      arr: [],
+      xAxis: []
+    }
+  },
+  props: {
+    city7uvi: {}
+  },
+  watch: {
+    city7uvi: {
+      handler() {
+        this.initCharts()
+      },
+      deep: true
     }
   },
   computed: {},
@@ -30,73 +42,69 @@ export default {
   },
   methods: {
     initCharts() {
-          let myCharts = this.$echarts.init(document.getElementById('rightThree'))
+      this.arr = this.city7uvi.arr;
+      this.xAxis = this.city7uvi.xAxis
+      let myCharts = this.$echarts.init(document.getElementById('rightThree'))
       let option = {
-          color: ['#67F9D8'],
-        // legend: {
-        //   data: ['abc', 'def']
-        // },
-        radar: {
-        //   shape: 'circle',
-            splitArea: {
-                areaStyle: {
-                    color: ['#111339'],
-                    shadowColor: 'rgba(0, 0, 0, 0.2)',
-                    shadowBlur: 10
-                }
-            },
-          indicator: [
-            { name: 'one', max: 6500 },
-            { name: 'two', max: 16000 },
-            { name: 'three', max: 30000 },
-            { name: 'four', max: 38000 },
-            { name: 'five', max: 52000 },
-            { name: 'six', max: 25000 }
-          ]
+        textStyle: {
+          color: "#f0f8ff"
         },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            boundaryGap: false,
+            data: this.xAxis
+          }
+        ],
+        yAxis: [
+          {
+            type: 'value'
+          }
+        ],
         series: [
           {
-            name: 'Budget vs spending',
-            type: 'radar',
-            data: [
-              {
-                value: [4200, 3000, 20000, 35000, 50000, 18000],
-                name: 'abc',
-                    areaStyle: {
-                        color: new this.$echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                            {
-                                color: '#111339',
-                                offset: 0
-                            },
-                            {
-                                color: '#67F9D8',
-                                offset: 1
-                            }
-                        ])
-                    }
-              },
-              {
-                value: [5000, 14000, 28000, 26000, 42000, 21000],
-                name: 'def',
-                  areaStyle: {
-                      color: new this.$echarts.graphic.RadialGradient(0.1, 0.6, 1, [
-                          {
-                              color: '#111339',
-                              offset: 0
-                          },
-                          {
-                              color: '#67F9D8',
-                              offset: 1
-                          }
-                      ])
-                  }
-              }
-            ]
+            name: 'Line 5',
+            type: 'line',
+            stack: 'Total',
+            smooth: true,
+            lineStyle: {
+              width: 0
+            },
+            showSymbol: false,
+            label: {
+              show: true,
+              position: 'top'
+            },
+            areaStyle: {
+              opacity: 0.8,
+              color: this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                {
+                  offset: 0,
+                  color: 'rgba(84, 198, 180,1)'
+                },
+                {
+                  offset: 1,
+                  color: 'rgb(84, 198, 180,0)'
+                }
+              ])
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            data: this.arr
           }
         ]
       };
       myCharts.setOption(option);
-
+      window.addEventListener('resize', function () {
+        myCharts.resize();
+      })
     }
   }
 }
@@ -106,12 +114,15 @@ export default {
 </style>
 <style lang="scss" scoped>
 .rightThree {
-    height: 100%;
-    width: 100%;
+  height: 100%;
+  width: 100%;
+  position: relative;
 
-    #rightThree {
-        height: 80%;
-        width: 100%;
-    }
+  #rightThree {
+    height: 80%;
+    width: 100%;
+    position: absolute;
+    top: 10%;
+  }
 }
 </style>

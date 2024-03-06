@@ -1,5 +1,11 @@
 import axios from 'axios'
 
+export function mapCom(){
+    return axios.get('http://172.20.10.3:3000/getPt')
+}
+export function cityTemp(){
+    return axios.get('http://172.20.10.3:3000/getAlltempOfProvince')
+}
 export function leftOne() {
     return axios.get('/api/leftOne');
 }

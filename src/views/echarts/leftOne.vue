@@ -2,7 +2,7 @@
     <div class="leftOne">
         <div class="top-title">
             <div class="text">
-                折线图模板
+                多日预报
             </div>
             <div class="box">
                 <div class="line"></div>
@@ -15,12 +15,16 @@
 </template>
 
 <script>
-import { leftOne } from '../../api/data'
 export default {
     components: {},
+    props:{
+        city7dayTemp: {}
+    },
     data() {
         return {
-            list: []
+            max: [],
+            min: [],
+            xAxis: []
         }
     },
     computed: {},
@@ -28,104 +32,85 @@ export default {
     mounted() {
         this.initEcharts();
     },
+    watch:{
+        city7dayTemp: {
+            handler(newValue, oldValue){
+                this.initEcharts()
+            },
+            deep: true,
+            immediate:true,
+        }
+    },
     methods: {
         async initEcharts() {
-            const { data } = await leftOne();
-            data.list.forEach((item) => {
-                this.list.push(item.number)
-            })
+            this.max = this.city7dayTemp.max;
+            this.min = this.city7dayTemp.min;
+            this.xAxis = this.city7dayTemp.xAxis;
+            // console.log(this.max,'111');
             let myCharts = this.$echarts.init(document.getElementById('leftOne'));
             let option = {
-                tooltip: {
-                    show: true,
-                    trigger: 'axis',
-                    axisPointer: {
-                        show: true,
-                        type: 'line',
-                        snap: true,
-                        lineStyle: {
-                            color: {
-                                x: 0,
-                                y: 0,
-                                x2: 0,
-                                y2: 1,
-                                colorStops: [
-                                    {
-                                        offset: 0, color: '#45aaf2' // 0% 处的颜色
-                                    },
-                                    {
-                                        offset: 0.5, color: 'white' // 50% 处的颜色
-                                    },
-                                    {
-                                        offset: 1, color: '#45aaf2' // 100% 处的颜色
-                                    }],
-                            }
-                        }
-                    }
+                textStyle:{
+                    color: "#f0f8ff"
                 },
+                tooltip: {
+                    trigger: 'axis'
+                },
+                color: ['#7cffb2', '#469f99'],
+                legend: {},
                 grid: {
                     top: '10%',
                     bottom: '30%',
                 },
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-                    axisTick: {
-                        show: false
-                    },
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: '#d1d8e0',
-                        }
-                    },
-                    boundaryGap: false
+                    boundaryGap: false,
+                    data: this.xAxis,
                 },
                 yAxis: {
                     type: 'value',
-                    show: true,
-                    axisTick: {
-                        show: false
+                    axisLabel: {
+                        formatter: '{value} °C'
                     },
-                    axisLine: {
-                        show: true,
-                        lineStyle: {
-                            color: '#d1d8e0',
-                        }
-                    },
-                    splitLine: {
-                        show: false
-                    },
+                    splitLine: false
                 },
                 series: [
                     {
-                        data: this.list,
                         type: 'line',
-                        showSymbol: false,
-                        lineStyle: {
-                            color: '#55E6C1',
-                        },
-                        itemStyle: {
-                            color: '#55E6C1',
-                        },
+                        data: this.max,
+                        symbol: 'none',
                         areaStyle: {
-                            color: {
-                                x: 0,
-                                y: 1,
-                                x2: 0,
-                                y2: 0,
-                                colorStops: [
-                                    {
-                                        offset: 0, color: '#111339', // 0% 处的颜色
-                                    },
-                                    {
-                                        offset: 1, color: 'rgba(85, 230, 193,0.4)', // 100% 处的颜色
-                                    }],
-                            }
+                            color: new this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                {
+                                    offset: 0,
+                                    color: 'rgba(124, 255, 178,1)'
+                                },
+                                {
+                                    offset: 1,
+                                    color: 'rgb(124, 255, 178,0)'
+                                }
+                            ])
                         }
+                    },
+                    {
+                        type: 'line',
+                        data: this.min,
+                        symbol: 'none',
+                        areaStyle: {
+                            opacity: 0.8,
+                            color: this.$echarts.graphic.LinearGradient(0, 0, 0, 1, [
+                                {
+                                    offset: 0,
+                                    color: 'rgba(84, 198, 180,0)'
+                                },
+                                {
+                                    offset: 1,
+                                    color: 'rgb(84, 198, 180,1)'
+                                }
+                            ])
+                        },
                     }
                 ]
-            }
+            };
             myCharts.setOption(option);
             window.addEventListener('resize', function () {
                 myCharts.resize();
@@ -135,7 +120,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-    @import '../../assets/sass/index.scss';
+@import '../../assets/sass/index.scss';
 </style>
 <style lang="scss" scoped>
 .leftOne {
@@ -143,8 +128,10 @@ export default {
     width: 100%;
 
     #leftOne {
-        width: 100%;
+        width: 95%;
         height: 75%;
+        left: 3.5%;
+        
     }
 }
 </style>

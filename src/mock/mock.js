@@ -6,7 +6,12 @@ Mock.mock('/api/leftOne','get',{
         {
             "number|1-100": 100
         }
-    ]
+    ],
+    // 'list2|7': [
+    //     {
+    //         "number|1-100": 100
+    //     }
+    // ]
 })
 Mock.mock('/api/leftTwo', 'get', {
     // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
@@ -17,11 +22,11 @@ Mock.mock('/api/leftTwo', 'get', {
 })
 Mock.mock('/api/leftThree', 'get', {
     // 属性 list 的值是一个数组，其中含有 1 到 10 个元素
-    'list|10': [[
-        '@cname',
-        '@city',
-        '@natural(18, 80)'
-    ]]
+    'list|7': [
+        {
+            "number|1-100": 100
+        }
+    ]
 })
 
 Mock.mock('/api/middleTwo', 'get', {

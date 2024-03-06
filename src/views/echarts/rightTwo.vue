@@ -2,7 +2,7 @@
   <div class="rightTwo">
     <div class="top-title">
       <div class="text">
-        胶囊图模板
+        降水概率
       </div>
       <div class="box">
         <div class="line"></div>
@@ -10,31 +10,69 @@
       </div>
     </div>
     <div id="rightTwo">
-      <dv-capsule-chart :config="config" style="width:90%;height:90%" />
     </div>
   </div>
 </template>
 
 <script>
-import { rightTwo } from "../../api/data"
 export default {
   components: {},
   data() {
     return {
-      config: {}
+     arr:[],
+     xAxis:[] 
     }
+  },
+  props:{
+    cityRain:{}
   },
   computed: {},
   created() { },
+  watch:{
+    cityRain:{
+      handler(){
+        this.getData()
+      }
+    }
+  },
   mounted() {
     this.getData();
   },
   methods: {
     async getData() {
-      const { data } = await rightTwo();
-      this.config = {
-        data: data.list
-      }
+      this.arr = this.cityRain.arr;
+      this.xAxis = this.cityRain.xAxis
+      let myCharts = this.$echarts.init(document.getElementById('rightTwo'));
+      let option = {
+        textStyle:{
+                    color: "#f0f8ff"
+                },
+        grid: {
+          top: '10%',
+          bottom: '30%',
+        },
+        xAxis: {
+          type: 'category',
+          data: this.xAxis
+        },
+        yAxis: {
+          type: 'value'
+        },
+        series: [
+          {
+            data: this.arr,
+            type: 'bar',
+            // showBackground: true,
+            backgroundStyle: {
+              color: 'rgba(180, 180, 180, 0.2)'
+            }
+          }
+        ]
+      };
+      myCharts.setOption(option);
+      window.addEventListener('resize', function () {
+        myCharts.resize();
+      })
     }
   }
 }
